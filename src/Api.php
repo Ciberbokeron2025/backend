@@ -23,8 +23,8 @@ class Api
     public function admissionsRange(string $inicio, string $fin): object
     {
         return $this->__request('stats/daterange', [
-            'fecha_inicio' => '2016-01-01',
-            'fecha_fin' => '2016-01-15',
+            'fecha_inicio' => $inicio,
+            'fecha_fin' => $fin,
         ]);
     }
 
