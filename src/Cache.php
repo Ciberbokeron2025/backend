@@ -7,7 +7,6 @@ use App\Cache\ICache;
 use App\Cache\JSONCache;
 use App\Cache\RedisCache;
 use App\Enums\CacheEnum;
-use App\Models\Api\Response;
 use App\Wrappers\Env;
 
 class Cache implements ICache
