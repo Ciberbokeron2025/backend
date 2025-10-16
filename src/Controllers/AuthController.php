@@ -40,7 +40,7 @@ class AuthController extends Controller
         // TODO: Do login
         // ...
 
-        Session::login($username);
+        Session::login('TODO');
 
         return new JsonResponse([]);
     }
