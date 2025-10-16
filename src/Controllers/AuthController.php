@@ -3,10 +3,13 @@
 namespace App\Controllers;
 
 use AltchaOrg\Altcha\Altcha;
+use App\Constants\Messages;
+use App\LocalDB;
 use App\Wrappers\Env;
 use App\Wrappers\Session;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\JsonResponse;
+use League\Route\Http\Exception\UnauthorizedException;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -37,12 +40,19 @@ class AuthController extends Controller
             throw self::__invalidBody();
         }
 
-        // TODO: Do login
-        // ...
+        $db = new LocalDB();
+        $loggedin = $db->login($username, $password);
 
-        Session::login('TODO');
+        if (!$loggedin) {
+            throw new UnauthorizedException(Messages::LOGIN_FAILED);
+        }
 
-        return new JsonResponse([]);
+        Session::login($username);
+
+        return new JsonResponse([
+            'status' => 200,
+            'message' => 'ok',
+        ]);
     }
 
     /**
@@ -54,6 +64,9 @@ class AuthController extends Controller
     public static function logout(ServerRequestInterface $request): Response
     {
         Session::destroy();
-        return new JsonResponse([]);
+        return new JsonResponse([
+            'status' => 200,
+            'message' => 'ok',
+        ]);
     }
 }
