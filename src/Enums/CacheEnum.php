@@ -7,7 +7,7 @@ namespace App\Enums;
  */
 enum CacheEnum: string
 {
-    case JSON = "json";
+    case FILE = "file";
     case APCU = "apcu";
     case REDIS = "redis";
 }

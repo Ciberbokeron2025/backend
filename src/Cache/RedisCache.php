@@ -29,11 +29,11 @@ class RedisCache implements ICache
         $this->client->close();
     }
 
-    public function get(string $cache_key): ?object
+    public function get(string $cache_key): ?string
     {
         $data = $this->client->get($cache_key);
         if ($data) {
-            return json_decode($data);
+            return $data;
         }
         return null;
     }

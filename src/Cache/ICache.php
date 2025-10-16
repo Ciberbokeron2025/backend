@@ -7,7 +7,7 @@ interface ICache
     /**
      * Get response from cache.
      */
-    public function get(string $cache_key): ?object;
+    public function get(string $cache_key): ?string;
 
     /**
      * Check if response exists in cache.

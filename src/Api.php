@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Wrappers\Crypto;
 use App\Wrappers\Env;
 use GuzzleHttp\Client;
 
@@ -37,7 +38,8 @@ class Api
     {
         $key = str_replace('/', '-', $endpoint);
         if ($this->cache->exists($key)) {
-            return $this->cache->get($key);
+            $data = $this->cache->get($key);
+            return json_decode(Crypto::decrypt($data));
         }
 
         $res = $this->client->get($endpoint, [
@@ -46,7 +48,7 @@ class Api
 
         $body = $res->getBody();
 
-        $this->cache->set($key, $body);
+        $this->cache->set($key, Crypto::encrypt($body));
         return json_decode($body);
     }
 }

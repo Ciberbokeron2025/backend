@@ -19,11 +19,11 @@ class ApcuCache implements ICache
     /**
      * {@inheritdoc}
      */
-    public function get(string $cache_key): ?object
+    public function get(string $cache_key): ?string
     {
         $data = apcu_fetch($cache_key);
         if ($data) {
-            return json_decode($data);
+            return $data;
         }
         return null;
     }

@@ -2,20 +2,19 @@
 
 namespace App\Cache;
 
-use App\Models\Api\Response;
 use App\Wrappers\Storage;
 
 /**
- * Cache using JSON files. Should only be used when debugging!
+ * Cache using txt files. Should only be used when debugging!
  */
-class JSONCache implements ICache
+class FileCache implements ICache
 {
     private string $cache_path;
 
     public function __construct()
     {
-        if (isset($_ENV['API_CACHE_JSON']) && !empty($_ENV['API_CACHE_JSON'])) {
-            $this->cache_path = $_ENV['API_CACHE_JSON'];
+        if (isset($_ENV['API_CACHE_PATH']) && !empty($_ENV['API_CACHE_PATH'])) {
+            $this->cache_path = $_ENV['API_CACHE_PATH'];
         } else {
             $this->cache_path = Storage::path('data');
             if (!is_dir($this->cache_path)) {
@@ -27,24 +26,24 @@ class JSONCache implements ICache
         }
     }
 
-    public function get(string $cache_key): ?object
+    public function get(string $cache_key): ?string
     {
-        $filename = $this->cache_path . '/' . $cache_key . '.json';
+        $filename = $this->cache_path . '/' . $cache_key . '.txt';
         if (is_file($filename)) {
             $json_string = file_get_contents($filename);
-            return json_decode($json_string);
+            return $json_string;
         }
         return null;
     }
 
     public function exists(string $cache_key): bool
     {
-        $filename = $this->cache_path . '/' . $cache_key . '.json';
+        $filename = $this->cache_path . '/' . $cache_key . '.txt';
         return is_file($filename);
     }
 
     public function set(string $cache_key, string $data, int $timeout = 3600): void
     {
-        file_put_contents($this->cache_path . '/' . $cache_key . '.json', $data);
+        file_put_contents($this->cache_path . '/' . $cache_key . '.txt', $data);
     }
 }

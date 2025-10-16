@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Cache\ApcuCache;
+use App\Cache\FileCache;
 use App\Cache\ICache;
-use App\Cache\JSONCache;
 use App\Cache\RedisCache;
 use App\Enums\CacheEnum;
 use App\Wrappers\Env;
@@ -19,9 +19,9 @@ class Cache implements ICache
         $cache = Env::api_cache();
         if ($cache !== null) {
             switch ($cache) {
-                case CacheEnum::JSON:
+                case CacheEnum::FILE:
                     // ONLY FOR DEBUGGING
-                    $this->engine = new JSONCache();
+                    $this->engine = new FileCache();
                     break;
                 case CacheEnum::APCU:
                     // For small setups
@@ -41,7 +41,7 @@ class Cache implements ICache
         return $this->engine !== null;
     }
 
-    public function get(string $cache_key): ?object
+    public function get(string $cache_key): ?string
     {
         return $this->isEnabled() ? $this->engine->get($cache_key) : null;
     }
