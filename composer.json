@@ -12,6 +12,12 @@
         "laminas/laminas-httphandlerrunner": "^2.13",
         "altcha-org/altcha": "^1.1",
         "monolog/monolog": "^3.9",
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.0",
+        "openai-php/client": "^0.17.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }
