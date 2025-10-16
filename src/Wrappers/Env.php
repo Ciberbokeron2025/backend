@@ -48,6 +48,11 @@ class Env
         return $value !== null ? CacheEnum::tryFrom($value) : null;
     }
 
+    public static function db_url(): string
+    {
+        return $_ENV['DB_URL'] ?? '';
+    }
+
     /**
      * Get Redis credentials.
      */

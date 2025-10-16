@@ -4,7 +4,6 @@ namespace App\Middleware;
 
 use App\Wrappers\Env;
 use App\Wrappers\Session;
-use Laminas\Diactoros\Response\RedirectResponse;
 use League\Route\Http\Exception\UnauthorizedException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -24,7 +23,7 @@ class AuthMiddleware implements MiddlewareInterface
         $path = $request->getUri()->getPath();
         $method = $request->getMethod();
 
-        if (!(str_starts_with($path, '/login') && $method === 'POST') && !Session::isLoggedIn()) {
+        if (!Env::app_debug() && !(str_starts_with($path, '/login') && $method === 'POST') && !Session::isLoggedIn()) {
             throw new UnauthorizedException();
         }
 

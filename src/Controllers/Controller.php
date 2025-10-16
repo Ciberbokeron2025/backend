@@ -22,17 +22,4 @@ abstract class Controller
     {
         return new BadRequestException(Messages::MUST_SEND_BODY);
     }
-
-    protected static function __tooManyChars(): BadRequestException
-    {
-        return new BadRequestException(Messages::TOO_MANY_CHARACTERS);
-    }
-
-    protected static function __render(string $template, ServerRequestInterface $request, array $data = []): HtmlResponse
-    {
-        return new HtmlResponse(Plates::render($template, [
-            ...$data,
-            'uri' => $request->getUri(),
-        ]));
-    }
 }

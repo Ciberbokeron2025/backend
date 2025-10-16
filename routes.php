@@ -1,4 +1,5 @@
 <?php
+use App\Controllers\AdmissionsController;
 use App\Controllers\AuthController;
 use League\Route\RouteGroup;
 
@@ -7,3 +8,5 @@ $router->group('/auth', function (RouteGroup $route) {
     $route->post('/login', [AuthController::class, 'post']);
     $route->get('/logout', [AuthController::class, 'logout']);
 });
+
+$router->get('/admissions', [AdmissionsController::class, 'index']);
